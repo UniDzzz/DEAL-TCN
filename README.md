@@ -29,6 +29,8 @@ This repository includes scripts for parameter pool generation, simulation post-
 * `lammps_output_process.py`: Post-processes LAMMPS output (`bonds.reaxff`) into species-vs-time matrices (`.npy`) and species lists (`.txt`).
 * `found_species_subsets.py`: Utility to align species data across multiple simulations by finding a common subset and grouping the rest.
 * `config.py`: Basic configuration defining the number of frames (`N_Frame`) and the atom type mapping (`type_dic`).
+* `Total_data.rar`: Including 25 test datasets and everyone of them contains the post-processing data of RMD simulation.
+* `Pool_data/`:Directory containing a representive files of the candidate, total data can be download form https://doi.org/10.5281/zenodo.17498418.
 * `lammps_input_file/`: Directory containing templates for LAMMPS simulations, including:
     * `in.MoO3S`: The main LAMMPS input script.
     * `ffield.reax.Mo_Al_O_S`: The ReaxFF force field file.
