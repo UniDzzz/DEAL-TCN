@@ -1,0 +1,62 @@
+units real 
+boundary p p p
+atom_style full 
+
+
+#建模
+region  box block 0 564 0 564 0 564 units box
+create_box 3 box bond/types 20  angle/types 10  extra/bond/per/atom 30 extra/special/per/atom 20 extra/angle/per/atom 30
+
+#填充MoO3分子和S2分子
+molecule m1 Mo3O9.dat
+molecule m2 S2.dat
+
+
+create_atoms 0 random 150 666 box mol m1 888 units box
+create_atoms 0 random 2250 1234 box mol m2 777 units box
+
+mass 1 95.9400
+mass 2 15.9990
+mass 3 32.0600
+set type 1 charge 1.53
+set type 2 charge -0.55
+set type 3 charge 0
+
+
+#定义原子间相互作用势
+pair_style reax/c NULL
+pair_coeff * * ffield.reax.Mo_Al_O_S Mo O S
+
+
+
+neighbor 2.0 bin
+neigh_modify every 10 delay 0 check no
+
+fix  1 all qeq/reax 1 0.0 10.0 1e-6 reax/c
+
+min_style cg
+minimize 1.0e-4 1.0e-6 100 1000
+
+
+timestep	0.2
+velocity all create 1100.0 87287 rot yes dist gaussian
+
+#热力学信息
+thermo 1000
+thermo_style custom step temp press pe ke etotal
+
+variable sp equal press 
+fix extra all print 5000 "${sp}" file pressure.txt
+
+
+
+
+fix 2 all nvt temp 1100 1100 20
+
+
+fix 3 all reax/c/bonds 5000 bonds.reaxff
+
+dump 1 all custom 5000 atominfo.lmp id mol type  x y z 
+
+
+run 1500000
