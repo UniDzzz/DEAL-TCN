@@ -1,5 +1,3 @@
-Based on the provided repository files, here is a comprehensive README in English.
-
 ***
 
 # Deep Ensemble Active Learning for Chemical Simulation Prediction
